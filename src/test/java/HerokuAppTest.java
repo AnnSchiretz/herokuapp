@@ -4,6 +4,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.interactions.SourceType;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -173,14 +174,11 @@ public class HerokuAppTest {
     public void checkSpelling() {
         driver.get("http://the-internet.herokuapp.com/typos");
         String expectedResult = "Sometimes you'll see a typo, other times you won't.";
+        String actualResult = "";
         for (int i = 0; i < 6; i++) {
             driver.navigate().refresh();
-            String actualResult = driver.findElement(By.xpath("//div/p[2]")).getText();
-            if (!expectedResult.equals(actualResult)) {
-                System.out.println("Найдена опечатка!");
-            } else {
-                System.out.println("Все ок!");
-            }
+            actualResult = driver.findElement(By.xpath("//div/p[2]")).getText();
+            assertEquals(expectedResult,actualResult, "Найдена ошибка");
         }
     }
 
